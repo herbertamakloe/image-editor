@@ -1,0 +1,187 @@
+/* Imported fonts from GoogleFonts - Nunito */
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400;1,500&display=swap");
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Nunito", sans-serif;
+}
+
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	background: #e3f2fd;
+}
+
+.container {
+	width: 850px;
+	background: #fff;
+	border-radius: 10px;
+	padding: 30px 35px 35px;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.container.disable :where(.editor_panel, .reset_filter, .save-image) {
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+.container h2 {
+	font-size: 22px;
+	font-weight: 500;
+}
+
+.container .wrapper {
+	display: flex;
+	margin: 20px 0;
+	min-height: 335px;
+}
+
+.wrapper .editor_panel {
+	border: 1px solid #ccc;
+	padding: 15px 20px;
+	width: 280px;
+	border-radius: 5px;
+}
+
+.editor_panel .title {
+	display: block;
+	font-size: 16px;
+	margin-bottom: 12px;
+}
+
+.editor_panel .options,
+.controls {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.editor_panel button {
+	height: 40px;
+	font-size: 14px;
+	color: #6c757d;
+	margin-bottom: 8px;
+	border: 1px solid #aaa;
+	border-radius: 3px;
+	background: #fff;
+}
+
+.editor_panel button:hover {
+	background: #f5f5f5;
+}
+
+.editor_panel .filter button {
+	width: calc(100% / 2 - 4px);
+}
+
+.filter button.active {
+	background: #9325e1;
+	color: #fff;
+	border-color: #9325e1;
+}
+
+.filter .slider {
+	margin-top: 12px;
+}
+
+.filter .slider .filter_info {
+	display: flex;
+	justify-content: space-between;
+	color: #464646;
+	font-size: 14px;
+}
+
+.filter .slider input {
+	width: 100%;
+	height: 5px;
+	accent-color: #9325e1;
+}
+
+.editor_panel .rotate {
+	margin-top: 17px;
+}
+
+.editor_panel .rotate button {
+	width: calc(100% / 4 - 3px);
+}
+
+.rotate button:nth-child(3),
+.rotate button:nth-child(4) {
+	font-size: 18px;
+}
+
+.wrapper .image_preview {
+	margin-left: 20px;
+	flex-grow: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.image_preview img {
+	max-width: 490px;
+	max-height: 335px;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.controls button {
+	padding: 11px 20px;
+	font-size: 14px;
+	border-radius: 3px;
+	cursor: pointer;
+	background: #fff;
+	color: #fff;
+	text-transform: uppercase;
+}
+
+.controls .reset_filter {
+	color: #6c757d;
+	border: 1px solid #6c757d;
+}
+
+.controls .choose_image {
+	background: #6c757d;
+	border: 1px solid #6c757d;
+}
+
+.controls .save_image {
+	margin-left: 5px;
+	background: #9325e1;
+	border: 1px solid #9325e1;
+}
+
+/* RESPONSIVENESS */
+
+@media screen and (max-width: 760px) {
+	.container {
+		padding: 25px;
+	}
+	.container .wrapper {
+		flex-wrap: wrap-reverse;
+	}
+	.wrapper .editor_panel {
+		width: 100%;
+	}
+	.wrapper .image_preview {
+		width: 100%;
+		margin: 0 0 15px;
+	}
+}
+@media screen and (max-width: 500px) {
+	.controls button {
+		width: 100%;
+		margin-bottom: 10px;
+	}
+	.controls .row {
+		width: 100%;
+	}
+	.controls .row .save-image {
+		margin-left: 0px;
+	}
+}
