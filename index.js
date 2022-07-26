@@ -5,7 +5,9 @@ const fileInput = document.querySelector(".file_input"),
 	filterName = document.querySelector(".filter_info .name"),
 	filterValue = document.querySelector(".filter_info .value"),
 	filterSlider = document.querySelector(".slider input"),
-	chooseImageBtn = document.querySelector(".choose_image");
+	resetFilterBtn = document.querySelector(".reset_filter"),
+	chooseImageBtn = document.querySelector(".choose_image"),
+	saveImageBtn = document.querySelector(".save_image");
 
 let brightness = 100,
 	saturation = 100,
@@ -28,6 +30,7 @@ const loadImage = () => {
 	imagePreview.src = URL.createObjectURL(file); //passing file url as preview image src
 	imagePreview.addEventListener("load", () => {
 		document.querySelector(".container").classList.remove("disable");
+		resetFilterBtn.click(); //clicking reset btn so the filter value reset if the user select new img
 	});
 };
 
@@ -95,13 +98,59 @@ rotateOptions.forEach((option) => {
 	});
 });
 
+const resetFilter = () => {
+	//resetting all variables to their default value
+	brightness = 100;
+	saturation = 100;
+	inversion = 0;
+	grayscale = 0;
+
+	rotate = 0;
+	flipHorizontal = 1;
+	flipVertical = 1;
+
+	filterOptions[0].click(); //clicking brightness button, so the brightness selected by default
+	applyFilters();
+};
+
+const saveImage = () => {
+	// console.log("Save Image button clicked");
+	const canvas = document.createElement("canvas"); //creating canvas element
+	const ctx = canvas.getContext("2d"); //canvas.getContext return a drawing context on the canvas
+	canvas.width = imagePreview.naturalWidth; //setting canvas width to actual image width
+	canvas.height = imagePreview.naturalHeight; //setting canvas heiht to actual image height
+
+	//applying user selected filter to canvas
+	ctx.filter = `brightness(${brightness}%) saturate(${saturation}%) invert(${inversion}%) grayscale(${grayscale}%)`;
+	ctx.translate(canvas.width / 2, canvas.height / 2); //translating canvas from center
+	if (rotate !== 0) {
+		//if rotate value isn't 0, rotate the canvas
+		ctx.rotate((rotate * Math.PI) / 180);
+	}
+	ctx.scale(flipHorizontal, flipVertical); //flip canvas, horizontal/vertical
+	ctx.drawImage(
+		imagePreview,
+		-canvas.width / 2,
+		-canvas.height / 2,
+		canvas.width,
+		canvas.height
+	);
+
+	const link = document.createElement("a"); //creating <a> element tag
+	link.download = "image.jpg"; //passing <a> tag download value to "image.jpg"
+	link.href = canvas.toDataURL(); //passing <a> tag value to canvas data url
+	link.click(); //clicking <a> tag so the image download
+};
+
 fileInput.addEventListener("change", loadImage);
 filterSlider.addEventListener("input", updateFilter);
 chooseImageBtn.addEventListener("click", () => fileInput.click());
 imagePreview.addEventListener("click", () => {
-	if (imagePreview) {
+	if (imagePreview.getAttribute("src") === "image-placeholder.svg") {
 		fileInput.click();
 	} else {
-		return null;
+		return;
 	}
 });
+resetFilterBtn.addEventListener("click", resetFilter);
+saveImageBtn.addEventListener("click", saveImage);
